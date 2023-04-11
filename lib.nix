@@ -55,7 +55,7 @@ in
     let
       newInputs = l.callFlakes inputs args;
     in
-    f newInputs args;
+    (f newInputs args) // { ${l.funcName} = l.makeFun inputs f; };
 
   attrNamesToAttr = names: value:
     l.listToAttrs
@@ -152,8 +152,8 @@ in
           );
 
     in
-    systemDependentAttrs // systemIndependentAttrs // {
+    (systemDependentAttrs // systemIndependentAttrs // {
       inherit systemIndependentFields;
       ${l.funcName} = l.makeFun inputs f;
-    };
+    });
 }
