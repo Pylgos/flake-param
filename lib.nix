@@ -31,7 +31,7 @@ in
       in
       l.mapAttrs
         (name: value:
-          if l.hasAttr system value then
+          if (l.isAttrs value) && (l.hasAttr system value) then
             value.${system}
           else
             value
